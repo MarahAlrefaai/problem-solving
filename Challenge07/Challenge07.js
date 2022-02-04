@@ -3,12 +3,12 @@
 // 1) ---------------------
 //
 //  using the (objLat) function; return the formatted text based on the provided object as the example:
- /* let obj = {
-      firstName: 'Jaber',
-      lastName: 'Saleh',
-      age: 67,
-   hobby: 'Gaming and Sleeping'
-  }*/
+/* let obj = {
+     firstName: 'Jaber',
+     lastName: 'Saleh',
+     age: 67,
+  hobby: 'Gaming and Sleeping'
+ }*/
 //   ===>
 //   'my name is Jaber Saleh I am 67 YO, and I love Gaming and Sleeping.'
 
@@ -21,26 +21,26 @@
 const objLat = (obj) => {
     // write your code here
 
-    var firstn=obj.firstName.toString();
-    var firstn1=firstn[0].toUpperCase();
-    let n1=firstn.length;
-    firstn1=firstn1+firstn.slice(1,n1);
+    var firstn = obj.firstName.toString();
+    var firstn1 = firstn[0].toUpperCase();
+    let n1 = firstn.length;
+    firstn1 = firstn1 + firstn.slice(1, n1);
     console.log(firstn1);
 
 
-var lastn=obj.lastName.toString();
-var lastn1=lastn[0].toUpperCase();
-let n=lastn.length;
-lastn1=lastn1+lastn.slice(1,n);
-console.log(lastn1);
+    var lastn = obj.lastName.toString();
+    var lastn1 = lastn[0].toUpperCase();
+    let n = lastn.length;
+    lastn1 = lastn1 + lastn.slice(1, n);
+    console.log(lastn1);
 
 
 
 
-  let sent=`my name is ${firstn1} ${lastn1} I am ${obj.age} YO, and I love ${obj.hobby}.`;
-  
-  return sent;
-    
+    let sent = `my name is ${firstn1} ${lastn1} I am ${obj.age} YO, and I love ${obj.hobby}.`;
+
+    return sent;
+
 
 
 };
@@ -106,29 +106,30 @@ console.log(lastn1);
 
 // ------------------------
 const cvFormatter = (arr) => {
-    
     // write your code here
-    
-    let arr1=[];
-        for(let i=0;i<arr.length;i++){
-            if((arr[i].yearsOfExperience>1)){
-                if(arr[i].firstName==null){
-                    arr1.push( `{\nfullName: ${arr[i].lastName}\ntech: ${arr[i].tech}\n}`);
-              
-                }else{
-                    if(arr[i].lastName==null){
-                        arr1.push(`{\nfullName: ${arr[i].firstName}\ntech: ${arr[i].tech}\n}`);
-                    }else{
-                        arr1.push(`{\nfullName: ${arr[i].firstName} ${arr[i].lastName}\ntech: ${arr[i].tech}\n}`);
+    let arr1 = [];
 
-                    }
-                }
-                           
+    for (let i = 0; i < arr.length; i++) {
+        if ((arr[i].yearsOfExperience > 1)) {
+            arr1.push(arr[i]);
+        }
+    }
+
+    for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i].firstName == null) {
+            arr1[i].fullName = arr1[i].lastName;
+        } else {
+            if (arr1[i].lastName == null) {
+                arr1[i].fullName = arr1[i].firstName;
+            } else {
+                arr1[i].fullName = arr1[i].firstName + " " + arr1[i].lastName;
             }
         }
-        return arr1;
-
-
+        delete arr1[i].firstName;
+        delete arr1[i].lastName;
+        delete arr1[i].yearsOfExperience;
+    }
+    return arr1;
 };
 
 // 3) ---------------------
@@ -153,6 +154,26 @@ const cvFormatter = (arr) => {
 // ------------------------
 const applicationsStatics = (arr) => {
     // write your code here
+    let result = {
+        python_Devs: 0,
+        javaScript_Devs: 0,
+        dotNet_Devs: 0,
+        java_Devs: 0,
+        totalApplicants: 0,
+        rejectedApplicants: 0,
+    }
+    for (let i = 0; i < arr.length; i++) {
+        if (((arr[i].firstName == "" || arr[i].firstName == null) && (arr[i].lastName == null || arr[i].lastName == "")) || arr[i].yearsOfExperience <= 1) {
+            result.rejectedApplicants += 1;
+        }
+        if (arr[i].tech == "Python") { result.python_Devs += 1; }
+        if (arr[i].tech == ".Net") { result.dotNet_Devs += 1; }
+        if (arr[i].tech == "JS") { result.javaScript_Devs += 1; }
+        if (arr[i].tech == "Java") { result.java_Devs += 1; }
+        result.totalApplicants = arr.length;
+    }
+
+    return result;
 };
 
 // 4) ---------------------
@@ -278,6 +299,17 @@ let data = {
 
 const classesAvg = (data) => {
     // write your code here
+    let sum = 0, avg = 0, numofStudent = 0;
+    for (let i = 0; i < data.grades.length; i++) {
+        for (let j = 0; j < data.grades[i].classes.length; j++) {
+            for (let y = 0; y < data.grades[i].classes[j].classScores.length; y++) {
+                sum += data.grades[i].classes[j].classScores[y];
+                numofStudent++;
+            }
+            data.grades[i].classes[j].avg = Math.floor(sum / numofStudent);
+            sum = 0; numofStudent = 0;
+        }
+    } return data;
 };
 
 module.exports = { objLat, cvFormatter, applicationsStatics, classesAvg };
