@@ -306,6 +306,7 @@ const classesAvg = (data) => {
                 sum += data.grades[i].classes[j].classScores[y];
                 numofStudent++;
             }
+            
             data.grades[i].classes[j].avg = Math.floor(sum / numofStudent);
             sum = 0; numofStudent = 0;
         }
